@@ -59,3 +59,25 @@ y_train=train_dataset['Survived']
 
 
 from sklearn.svm import SVC
+svc_reg=SVC()
+svc_reg.fit(X_train, y_train)
+
+
+from sklearn.model_selection import cross_val_score
+
+accuracy=cross_val_score(svc_reg, X_train, y_train, cv=10)
+accuracy.mean()
+
+
+from sklearn.tree import DecisionTreeRegressor
+regressordt = DecisionTreeRegressor(random_state = 0)
+regressordt.fit(X_train, y_train)
+
+
+
+from sklearn.ensemble import RandomForestClassifier
+regressorrf = RandomForestClassifier(n_estimators = 10, random_state = 0)
+regressorrf.fit(X_train, y_train)
+
+accuracy=cross_val_score(regressorrf, X_train, y_train, cv=10)
+accuracy.mean()
