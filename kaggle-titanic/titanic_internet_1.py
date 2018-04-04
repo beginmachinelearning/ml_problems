@@ -9,7 +9,7 @@ from pandas import Series, DataFrame
 from patsy import dmatrices
 from sklearn import datasets, svm
 from KaggleAux import predict as ka # see github.com/agconti/kaggleaux for more details
-
+from cat_encoder import *
 
 df = pd.read_csv("data/train.csv") 
 
