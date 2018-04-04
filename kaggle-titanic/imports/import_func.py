@@ -2,6 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+
+
+def replace_non_cabin_values(x):
+    if (x == 0):
+        return(x)
+    else:
+        return 1
+
 def check_empty_value_columns(dataset):
     return dataset.columns[dataset.isna().any()].tolist();
 
