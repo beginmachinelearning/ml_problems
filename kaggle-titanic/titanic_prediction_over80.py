@@ -15,7 +15,12 @@ from imports import categorical_imputer
 dataset_b = pd.read_csv('dataset/train/train.csv')
 train_dataset= dataset_b.copy()
 
+train_dataset['AgeRange']=train_dataset['Age']/20
+train_dataset['AgeRange']=train_dataset['AgeRange'].fillna(train_dataset['AgeRange'].mean())
+train_dataset['AgeRange']=train_dataset['AgeRange'].astype(int)
 
+
+train_dataset['Family']=train_dataset['SibSp']+train_dataset['Parch']
 
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import Imputer
@@ -23,7 +28,7 @@ from sklearn.preprocessing import Imputer
 imputer = Imputer(strategy="median")
 
 num_pipeline = Pipeline([
-        ("select_numeric", DataFrameSelector(["Age", "SibSp", "Parch", "Fare"])),
+        ("select_numeric", DataFrameSelector(["Age", "SibSp", "Parch", "Fare", "AgeRange", "Family"])),
         ("imputer", Imputer(strategy="median")),
     ])
     
@@ -44,8 +49,9 @@ cat_pipeline = Pipeline([
         ("imputer", MostFrequentImputer()),
         ("cat_encoder", CategoricalEncoder(encoding='onehot-dense')),
     ])
-    
-K=cat_pipeline.fit_transform(train_dataset)
+
+
+cat_pipeline.fit_transform(train_dataset)
 
 from sklearn.pipeline import FeatureUnion
 preprocess_pipeline = FeatureUnion(transformer_list=[
@@ -81,3 +87,15 @@ regressorrf.fit(X_train, y_train)
 
 accuracy=cross_val_score(regressorrf, X_train, y_train, cv=10)
 accuracy.mean()
+
+
+dataset_test = pd.read_csv('dataset/test/test.csv')
+dataset_test_b= dataset_test.copy()
+
+dataset_test['AgeRange']=dataset_test['Age']/20
+dataset_test['AgeRange']=dataset_test['AgeRange'].fillna(dataset_test['AgeRange'].mean())
+dataset_test['AgeRange']=dataset_test['AgeRange'].astype(int)
+
+
+dataset_test['Family']=dataset_test['SibSp']+dataset_test['Parch']
+
