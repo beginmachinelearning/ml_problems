@@ -99,3 +99,15 @@ dataset_test['AgeRange']=dataset_test['AgeRange'].astype(int)
 
 dataset_test['Family']=dataset_test['SibSp']+dataset_test['Parch']
 
+X_test = preprocess_pipeline.fit_transform(dataset_test) 
+
+
+
+ypred=regressorrf.predict(X_test)
+
+
+from sklearn.svm import SVC
+svc_reg=SVC()
+svc_reg.fit(X_train, y_train)
+
+ypred=svc_reg.predict(X_test)
