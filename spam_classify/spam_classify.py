@@ -44,7 +44,7 @@ print(ham_emails[0].get_content().strip())
 
 
 def get_email_structure(email):
-    print(isinstance(email, str)
+    print(isinstance(email, str))
     if isinstance(email, str):
         return email
     payload = email.get_payload()
